@@ -19,18 +19,17 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(30),
-            child: ChangeNotifierProvider<LoginController>(
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(30),
+          children: [
+            ChangeNotifierProvider<LoginController>(
               create: (context) => LoginController(),
               child: Consumer<LoginController>(
                 builder: (context, controller, child) => Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const PageTitle(title: 'Login'),
                       const SizedBox(height: 15),
@@ -79,8 +78,8 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

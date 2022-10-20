@@ -1,3 +1,4 @@
+import 'package:ath_mobile/features/authentication/widgets/page_title.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -28,20 +29,12 @@ class SplashScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
-          Text(
-            'Skin Disease Dignosis',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.black54,
-            ),
+          Center(
+            child: PageTitle(title: 'Skin Disease Diagnosis'),
           ),
           SizedBox(height: 30),
           Center(
-            child: CircularProgressIndicator(
-              color: Colors.redAccent,
-            ),
+            child: CircularProgressIndicator(),
           ),
         ],
       ),

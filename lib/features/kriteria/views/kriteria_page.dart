@@ -27,64 +27,68 @@ class KriteriaPage extends StatelessWidget {
               ),
             ],
           ),
-          body: ListView.separated(
-            itemCount: controller.allKriteria.length,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) => ListTile(
-              title: Text(controller.allKriteria[index].name),
-              subtitle: Text(
-                'Kode ${controller.allKriteria[index].code} - Nilai ${controller.allKriteria[index].belief}',
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // IconButton(
-                  //   color: Colors.green,
-                  //   onPressed: () {},
-                  //   icon: const Icon(Icons.edit),
-                  // ),
-                  IconButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Hapus gejala'),
-                          content: Text(
-                            'Anda yakin akan menghapus gejala ${controller.allKriteria[index].name} [${controller.allKriteria[index].code}] ?',
-                          ),
-                          actions: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.green,
+          body: controller.loading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.separated(
+                  itemCount: controller.allKriteria.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(controller.allKriteria[index].name),
+                    subtitle: Text(
+                      'Kode ${controller.allKriteria[index].code} - Nilai ${controller.allKriteria[index].belief}',
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // IconButton(
+                        //   color: Colors.green,
+                        //   onPressed: () {},
+                        //   icon: const Icon(Icons.edit),
+                        // ),
+                        IconButton(
+                          color: Colors.red,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Hapus gejala'),
+                                content: Text(
+                                  'Anda yakin akan menghapus gejala ${controller.allKriteria[index].name} [${controller.allKriteria[index].code}] ?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.green,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red,
+                                    ),
+                                    onPressed: () {
+                                      controller.deleteKriteria(
+                                        controller.allKriteria[index].id,
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Hapus'),
+                                  ),
+                                ],
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Batal'),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.red,
-                              ),
-                              onPressed: () {
-                                controller.deleteKriteria(
-                                  controller.allKriteria[index].id,
-                                );
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Hapus'),
-                            ),
-                          ],
+                            );
+                          },
+                          icon: const Icon(Icons.delete),
                         ),
-                      );
-                    },
-                    icon: const Icon(Icons.delete),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
         ),
       ),
     );

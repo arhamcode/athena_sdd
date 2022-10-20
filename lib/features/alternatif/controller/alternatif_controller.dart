@@ -11,6 +11,8 @@ import '../models/alternatif.dart';
 class AlternatifController extends ChangeNotifier {
   String token = locator<AuthenticationService>().getToken();
 
+  bool loading = false;
+
   List<Alternatif> allAlternatif = [];
 
   AlternatifController() {
@@ -18,6 +20,9 @@ class AlternatifController extends ChangeNotifier {
   }
 
   Future<void> fetchAlternatif() async {
+    loading = true;
+    notifyListeners();
+
     var response = await http.get(
       apiEntrypoint.replace(path: '/alternatif'),
       headers: {'Authorization': 'Bearer $token'},
@@ -27,6 +32,8 @@ class AlternatifController extends ChangeNotifier {
     for (var i = 0; i < responseDecode.length; i++) {
       allAlternatif.add(Alternatif.fromJson(responseDecode[i]));
     }
+
+    loading = false;
     notifyListeners();
   }
 

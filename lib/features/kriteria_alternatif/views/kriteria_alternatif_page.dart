@@ -29,7 +29,6 @@ class KriteriaAlternatifPage extends StatelessWidget {
                     builder: (context) => AlertDialog(
                       content: SizedBox(
                         width: 500,
-                        height: 300,
                         child: FutureBuilder(
                           future: controller.fetchAvailableGejala(),
                           builder: (context, snapshot) {
@@ -49,7 +48,9 @@ class KriteriaAlternatifPage extends StatelessWidget {
                                     .toList(),
                               );
                             } else {
-                              return const CircularProgressIndicator();
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
                             }
                           },
                         ),

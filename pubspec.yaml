@@ -1,5 +1,5 @@
 name: ath_mobile
-description: Athena Skin Diagnosis
+description: Skin Disease Diagnosis
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -16,6 +16,7 @@ dependencies:
   hive_flutter: ^1.1.0
   provider: ^6.0.4
   auto_route: ^5.0.2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

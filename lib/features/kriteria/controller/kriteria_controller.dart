@@ -11,6 +11,8 @@ import '../models/kriteria.dart';
 class KriteriaController extends ChangeNotifier {
   String token = locator<AuthenticationService>().getToken();
 
+  bool loading = false;
+
   List<Kriteria> allKriteria = [];
 
   KriteriaController() {
@@ -18,6 +20,9 @@ class KriteriaController extends ChangeNotifier {
   }
 
   Future<void> fetchKriteria() async {
+    loading = true;
+    notifyListeners();
+
     var response = await http.get(
       apiEntrypoint.replace(path: '/kriteria'),
       headers: {'Authorization': 'Bearer $token'},
@@ -27,6 +32,8 @@ class KriteriaController extends ChangeNotifier {
     for (var i = 0; i < responseDecode.length; i++) {
       allKriteria.add(Kriteria.fromJson(responseDecode[i]));
     }
+
+    loading = false;
     notifyListeners();
   }
 

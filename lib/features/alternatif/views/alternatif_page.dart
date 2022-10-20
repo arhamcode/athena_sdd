@@ -30,75 +30,80 @@ class AlternatifPage extends StatelessWidget {
               ),
             ],
           ),
-          body: ListView.separated(
-            itemCount: controller.allAlternatif.length,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) => ListTile(
-              title: Text(controller.allAlternatif[index].name),
-              subtitle: Text('Kode ${controller.allAlternatif[index].code}'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: () async {
-                      await context.router.push(KriteriaAlternatifRoute(
-                        alternatif: controller.allAlternatif[index],
-                      ));
-                      controller.fetchAlternatif();
-                    },
-                    icon: const Icon(
-                      Icons.edit,
-                      size: 18,
-                    ),
-                    label: Text(
-                      'Gejala (${controller.allAlternatif[index].gejala.length})',
-                    ),
-                  ),
-                  IconButton(
-                    color: Colors.red,
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Hapus penyakit kulit'),
-                          content: Text(
-                            'Anda yakin akan menghapus penyakit kulit ${controller.allAlternatif[index].name} [${controller.allAlternatif[index].code}] ?',
+          body: controller.loading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.separated(
+                  itemCount: controller.allAlternatif.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(controller.allAlternatif[index].name),
+                    subtitle:
+                        Text('Kode ${controller.allAlternatif[index].code}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
                           ),
-                          actions: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.green,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Batal'),
-                            ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.red,
-                              ),
-                              onPressed: () {
-                                controller.deleteAlternatif(
-                                  controller.allAlternatif[index].id,
-                                );
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Hapus'),
-                            ),
-                          ],
+                          onPressed: () async {
+                            await context.router.push(KriteriaAlternatifRoute(
+                              alternatif: controller.allAlternatif[index],
+                            ));
+                            controller.fetchAlternatif();
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                            size: 18,
+                          ),
+                          label: Text(
+                            'Gejala (${controller.allAlternatif[index].gejala.length})',
+                          ),
                         ),
-                      );
-                    },
-                    icon: const Icon(Icons.delete),
+                        IconButton(
+                          color: Colors.red,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Hapus penyakit kulit'),
+                                content: Text(
+                                  'Anda yakin akan menghapus penyakit kulit ${controller.allAlternatif[index].name} [${controller.allAlternatif[index].code}] ?',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.green,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Batal'),
+                                  ),
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red,
+                                    ),
+                                    onPressed: () {
+                                      controller.deleteAlternatif(
+                                        controller.allAlternatif[index].id,
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Hapus'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.delete),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
         ),
       ),
     );

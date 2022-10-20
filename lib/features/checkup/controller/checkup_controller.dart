@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 
+import 'package:ath_mobile/features/alternatif/models/alternatif.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +13,8 @@ class CheckUpController extends ChangeNotifier {
   String token = locator<AuthenticationService>().getToken();
 
   bool loading = false;
+
+  Alternatif? alternatif;
 
   List<Kriteria> allKriteria = [];
 
@@ -43,6 +46,32 @@ class CheckUpController extends ChangeNotifier {
     for (var i = 0; i < responseDecode.length; i++) {
       allKriteria.add(Kriteria.fromJson(responseDecode[i]));
     }
+    loading = false;
+    notifyListeners();
+  }
+
+  resetForm() {
+    alternatif = null;
+    selectedId = [];
+    notifyListeners();
+  }
+
+  Future<void> sendCheckUp() async {
+    loading = true;
+    notifyListeners();
+
+    var data = {'selectedGejalaId': selectedId};
+
+    var response = await http.post(
+      apiEntrypoint.replace(path: '/checkup'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-type': 'application/json',
+      },
+      body: convert.jsonEncode(data),
+    );
+    var responseDecode = convert.jsonDecode(response.body);
+    alternatif = Alternatif.fromJson(responseDecode);
     loading = false;
     notifyListeners();
   }

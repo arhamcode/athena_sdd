@@ -16,8 +16,10 @@ class Alternatif {
   factory Alternatif.fromJson(json) {
     List<Kriteria> gejala = [];
 
-    for (var i = 0; i < json['gejala'].length; i++) {
-      gejala.add(Kriteria.fromJson(json['gejala'][i]));
+    if (json['gejala'] != null) {
+      for (var i = 0; i < json['gejala'].length; i++) {
+        gejala.add(Kriteria.fromJson(json['gejala'][i]));
+      }
     }
 
     return Alternatif(
